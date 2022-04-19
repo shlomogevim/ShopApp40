@@ -94,15 +94,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     fun userLoggedInSuccess(user: User) {
         hideProgressDialog()
-        // Print the user details in the log as of now.
-        Log.i("gg", user.firstName)
-        Log.i("gg", user.lastName)
-        Log.i("gg", user.email)
 
          if (user.profileCompleted == 0) {
              // If the user profile is incomplete then launch the UserProfileActivity.
          val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
-          //  intent.putExtra(EXTRA_USER_DETAILS, user)
+           intent.putExtra(EXTRA_USER_DETAILS, user)
              startActivity(intent)
          } else {
              // Redirect the user to Main Screen after log in.

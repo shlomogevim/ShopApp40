@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatTextView
  * This class will be used for Custom font text using the EditText which inherits the AppCompatEditText class.
  */
 class MSPEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
-
     /**
      * The init block runs every time the class is instantiated.
      */
@@ -26,7 +25,8 @@ class MSPEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     private fun applyFont() {
         // This is used to get the file from the assets folder and set it to the title textView.
         val typeface: Typeface =
-            Typeface.createFromAsset(context.assets, "Montserrat-Regular.ttf")
+         //   Typeface.createFromAsset(context.assets, "Montserrat-Regular.ttf")
+            Typeface.createFromAsset(context.assets, "a101_ankaclm_bold_webfont.ttf")
         setTypeface(typeface)
     }
 }
