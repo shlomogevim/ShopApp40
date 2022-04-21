@@ -11,11 +11,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.shopapp40.R
 import com.sg.shopapp40.databinding.ActivityUserProfileBinding
 import com.sg.shopapp40.firestore.FirestoreClass
-import com.sg.shopapp40.modeles.User
+import com.sg.shopapp40.models.User
 import com.sg.shopapp40.utiles.Constants
 import com.sg.shopapp40.utiles.Constants.COMPLETE_PROFILE
 import com.sg.shopapp40.utiles.Constants.EXTRA_USER_DETAILS
@@ -37,7 +36,6 @@ class UserProfileActivity : BaseActivity() {
     private var mSelectedImageFileUri: Uri? = null
     private var mUserProfileImageURL: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
@@ -45,7 +43,6 @@ class UserProfileActivity : BaseActivity() {
         mUserDetail = User()
         getExsistData()
         operateAllButtons()
-
     }
 
     private fun getExsistData() {
@@ -53,12 +50,46 @@ class UserProfileActivity : BaseActivity() {
         if (intent.hasExtra(EXTRA_USER_DETAILS)) {
             mUserDetail = intent.getParcelableExtra(EXTRA_USER_DETAILS)!!
         }
-        binding.etFirstName.isEnabled = false
+
         binding.etFirstName.setText(mUserDetail.firstName)
-        binding.etLastName.isEnabled = false
         binding.etLastName.setText(mUserDetail.lastName)
+
         binding.etEmail.isEnabled = false
         binding.etEmail.setText(mUserDetail.email)
+
+        if (mUserDetail.profileCompleted == 0) {
+            binding.tvTitle.text = resources.getString(R.string.title_complete_profile)
+            binding.etFirstName.isEnabled = false
+            binding.etLastName.isEnabled = false
+        }else{
+            setupActionBar()
+            binding.tvTitle.text = resources.getString(R.string.title_edit_profile)
+
+            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetail.image,binding.ivUserPhoto)
+
+            // Set the existing values to the UI and allow user to edit except the Email ID.
+
+            if (mUserDetail.mobile != 0L) {
+                binding.etMobileNumber.setText(mUserDetail.mobile.toString())
+            }
+            if (mUserDetail.gender == MALE) {
+               binding.rbMale.isChecked = true
+            } else {
+                binding.rbFemale.isChecked = true
+            }
+        }
+    }
+    private fun setupActionBar() {
+
+    /*    setSupportActionBar(toolbar_user_profile_activity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+        }
+
+        toolbar_user_profile_activity.setNavigationOnClickListener { onBackPressed() }*/
     }
 
     private fun operateAllButtons() {
@@ -107,24 +138,22 @@ class UserProfileActivity : BaseActivity() {
         }
 
         val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetail.mobile.toString()) {
+            userHashMap[MOBILE] = mobileNumber.toLong()
+        }
+
         val gender = if (binding.rbMale.isChecked) {
             MALE
         } else {
             FEMALE
         }
-
-        if (mUserProfileImageURL.isNotEmpty()) {
-            userHashMap[IMAGE] = mUserProfileImageURL
-        }
-
-        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetail.mobile.toString()) {
-            userHashMap[MOBILE] = mobileNumber.toLong()
-        }
-
         if (gender.isNotEmpty() && gender != mUserDetail.gender) {
             userHashMap[GENDER] = gender
         }
 
+        if (mUserProfileImageURL.isNotEmpty()) {
+            userHashMap[IMAGE] = mUserProfileImageURL
+        }
         if (mUserProfileImageURL.isNotEmpty()) {
             userHashMap[IMAGE] = mUserProfileImageURL
         }
@@ -150,7 +179,7 @@ class UserProfileActivity : BaseActivity() {
             Toast.LENGTH_SHORT
         ).show()
 
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
         finish()
     }
 

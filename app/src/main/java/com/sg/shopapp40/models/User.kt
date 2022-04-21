@@ -1,4 +1,4 @@
-package com.sg.shopapp40.modeles
+package com.sg.shopapp40.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

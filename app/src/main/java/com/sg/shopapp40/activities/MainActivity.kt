@@ -44,6 +44,19 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*    binding.btnSelectImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.READ_EXTERNAL_STORAGE

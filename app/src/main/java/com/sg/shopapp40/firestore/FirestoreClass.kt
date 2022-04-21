@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
-import android.provider.SyncStateContract
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,8 +12,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.sg.shopapp40.activities.LoginActivity
 import com.sg.shopapp40.activities.RegisterActivity
+import com.sg.shopapp40.activities.SettingActivity
 import com.sg.shopapp40.activities.UserProfileActivity
-import com.sg.shopapp40.modeles.User
+import com.sg.shopapp40.models.User
 import com.sg.shopapp40.utiles.Constants.LOGGED_IN_USERNAME
 import com.sg.shopapp40.utiles.Constants.MYSHOPPAL_PREFERENCES
 import com.sg.shopapp40.utiles.Constants.USERS
@@ -70,10 +70,22 @@ class FirestoreClass {
                     is LoginActivity -> {
                         activity.userLoggedInSuccess(user)
                     }
+                    is SettingActivity ->{
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userDetailsSuccess(user)
+                    }
                 }
             }
 
             .addOnFailureListener { e ->
+                when (activity){
+                    is LoginActivity ->{
+                        activity.hideProgressDialog()
+                    }
+                    is SettingActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
 
                 Log.e(
                     activity.javaClass.simpleName,
@@ -164,4 +176,5 @@ class FirestoreClass {
                 )
             }
     }
+
 }

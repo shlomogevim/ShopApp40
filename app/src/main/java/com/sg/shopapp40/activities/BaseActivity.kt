@@ -3,7 +3,9 @@ package com.sg.shopapp40.activities
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.sg.shopapp40.R
@@ -15,6 +17,8 @@ open class BaseActivity : AppCompatActivity() {
     }*/
 
     private lateinit var mProgressDialog: Dialog
+    private var doubleBackToExitPressedOnce = false
+
 
     fun showErrorSnackBar(message: String, errorMessage: Boolean) {
         val snackBar =
@@ -60,5 +64,22 @@ open class BaseActivity : AppCompatActivity() {
      */
     fun hideProgressDialog() {
         mProgressDialog.dismiss()
+    }
+    /**
+     * A function to implement the double back press feature to exit the app.
+     */
+    fun doubleBackToExit() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+
+        Toast.makeText(this,"Please click back again immdiatly to exit ", Toast.LENGTH_SHORT).show()
+
+        @Suppress("DEPRECATION")
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 }

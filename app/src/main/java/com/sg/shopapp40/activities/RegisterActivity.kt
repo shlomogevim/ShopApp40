@@ -1,7 +1,5 @@
 package com.sg.shopapp40.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
@@ -12,7 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.sg.shopapp40.R
 import com.sg.shopapp40.databinding.ActivityRegisterBinding
 import com.sg.shopapp40.firestore.FirestoreClass
-import com.sg.shopapp40.modeles.User
+import com.sg.shopapp40.models.User
 
 class RegisterActivity : BaseActivity() {
     lateinit var binding: ActivityRegisterBinding

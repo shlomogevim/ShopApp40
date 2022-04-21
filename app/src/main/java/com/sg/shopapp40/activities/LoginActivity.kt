@@ -1,17 +1,14 @@
 package com.sg.shopapp40.activities
 
-import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.sg.shopapp40.R
 import com.sg.shopapp40.databinding.ActivityLoginBinding
 import com.sg.shopapp40.firestore.FirestoreClass
-import com.sg.shopapp40.modeles.User
+import com.sg.shopapp40.models.User
 import com.sg.shopapp40.utiles.Constants.EXTRA_USER_DETAILS
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -21,7 +18,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        DemiData()
+     DemiData()
 
         binding.tvRegister.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
@@ -93,18 +90,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun userLoggedInSuccess(user: User) {
+
+
+
         hideProgressDialog()
 
-         if (user.profileCompleted == 0) {
-             // If the user profile is incomplete then launch the UserProfileActivity.
-         val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
-           intent.putExtra(EXTRA_USER_DETAILS, user)
-             startActivity(intent)
-         } else {
-             // Redirect the user to Main Screen after log in.
-             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-         }
-
+       // if (user.profileCompleted == ) {
+        if (user.profileCompleted ==0) {
+            startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
+        }else{
+            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+            intent.putExtra(EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+        }
 
         finish()
     }

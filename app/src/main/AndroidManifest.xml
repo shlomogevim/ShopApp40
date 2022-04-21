@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sg.shopapp40">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +12,16 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.ShopApp40">
         <activity
-            android:name=".activities.UserProfileActivity"
-            android:screenOrientation="portrait"
+            android:name=".activities.SettingActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false"
+            android:label="@string/title_activity_dashboard" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:exported="false" />
@@ -28,22 +36,20 @@
             android:exported="true"
             android:screenOrientation="portrait">
 
+        </activity>
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".activities.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
